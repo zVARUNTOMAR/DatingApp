@@ -1,4 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import '~ngx-toastr/toastr.css';
+@import "../node_modules/bootswatch/dist/quartz/bootstrap.min.css";
 *{
     font-family: 'Roboto', sans-serif;
+    
 }
+
