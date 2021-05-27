@@ -1,7 +1,7 @@
 <div class="row" *ngIf="member">
     <div class="col-4">
         <div class="card">
-            <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}" class="card-img-top img-thumbnail">
+            <img src="{{member.photoUrl || '../../../assets/desktop.png'}}" alt="{{member.knownAs}}" class="card-img-top img-thumbnail">
 
             <div class="card-body">
                 <div>
@@ -14,11 +14,11 @@
                 </div> 
                 <div>
                     <strong>Member Since:</strong>
-                    <p>{{member.created}}</p>
+                    <p>{{member.created | timeago}}</p>
                 </div> 
                 <div>
                     <strong>Last Active:</strong>
-                    <p>{{member.lastActive}}</p>
+                    <p>{{member.lastActive | timeago}}</p>
                 </div> 
             </div>
 
@@ -44,11 +44,20 @@
                 <p>{{member.intersts}}</p>
             </tab>
             <tab heading='Photos'>
-                <div class="row">
-                    <div class="d-flex mt-2">
-                        <img *ngFor="let image of member.photos" src="{{image.url}}" alt="">
+                <div class="container mt-2">
+                    <carousel style="width:50%" [noPause]="false">
+                        <slide *ngFor="let image of member.photos">
+                            <img src="{{image.url}}" alt="first slide" style="display: block; width: 100%;">
+                        </slide>
+                      </carousel>
+                    </div>
+
+                <div class="row mt-2">
+                    <div class="col-4 mt-3 d-flex flex-wrap" *ngFor="let image of member.photos">
+                        <img src="{{image.url || '../../../assets/desktop.png'}}" alt="" width="200px" height="200px">
                     </div>
                 </div>
+               
             </tab>
             <tab heading='Messages'>
                 <p style="margin-top:20px">Messages will go here</p>
