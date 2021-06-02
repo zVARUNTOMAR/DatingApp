@@ -13,6 +13,7 @@ import { AccountService } from './account.service';
 @Injectable({
   providedIn: 'root'
 })
+
 export class MembersService {
 
   baseUrl = environment.apiUrl;
@@ -29,6 +30,15 @@ export class MembersService {
     })
    }
   
+   addLike(username :string){
+     return this.http.post(this.baseUrl+"likes/"+username,{});
+   }
+
+   getLikes(predicate : string,pageNumber:number,pageSize:number){
+     let params = this.getPaginationHeaders(pageNumber,pageSize);
+     params = params.append('predicate',predicate);
+     return this.getPaginatedResult<Partial<Member[]>>(this.baseUrl+'likes',params);
+   }
 
   getUserParams(){
     return this.userParams;
@@ -78,7 +88,6 @@ export class MembersService {
   }
 
   private getPaginationHeaders(pageNumber:number,pageSize:number){
-
     let params = new HttpParams(); 
       params = params.append('pageNumber',pageNumber.toString());
       params = params.append('pageSize',pageSize.toString());
@@ -87,9 +96,10 @@ export class MembersService {
   }
 
   getMember(username : string){
+    
     const member  =[...this.memberCache.values()].reduce((arr,elem) => arr.concat(elem.result) ,[])
     .find((member:Member)=>{
-      member.userName === username;
+      member.username === username;
     })
 
     return this.http.get<Member>(this.baseUrl+'users/'+username);
